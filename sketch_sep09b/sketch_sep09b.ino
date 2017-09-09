@@ -21,20 +21,23 @@
 //n =no sound 
 //put speaker on pin 9
 int speakerOut = 12;
+int speakerOut2= 8;
 int DEBUG = 1; //debugs
 
 void setup()
 { 
   pinMode(speakerOut, OUTPUT);//declares speaker
+  pinMode(speakerOut2, OUTPUT);//declares speaker
   if (DEBUG) 
   { 
     Serial.begin(9600); //something about debugging
   } 
 }
 int oNotes[] = {  C,  b,  g,  C,  b,   e,  C,  C,  c,  g, a, C };//order of notes 
+int xNotes[] = {  c,  c,  c,  c,  c,   c,  c,  c,  c,  c, c, c };//order of notes 
 int lNotes[]  = { 160, 160, 160,  160,  160,  160, 160, 160, 160, 160, 160, 160 }; //length of notes(only necessary when playing a prewritten song)
 int MAX_COUNT = sizeof(oNotes) / 2; // Melody length, for looping.
-
+int MAX_COUNT2 = sizeof(xNotes) / 2;
 // Set overall tempo
 long tempo = 10000;
 // Set length of pause between notes
@@ -44,6 +47,7 @@ int rest_count = 100;
 
 int order = 0;// initializes variables
 int note = 0;
+int x =0;
 long duration  = 0;
 
 // Pulse the speaker to play a tone for a particular duration
@@ -55,12 +59,13 @@ void playTone() {
       {
 
       digitalWrite(speakerOut,HIGH);
+      digitalWrite(speakerOut2,HIGH);
       delayMicroseconds(order / 2);
 
-      // DOWN
       digitalWrite(speakerOut, LOW);
+      digitalWrite(speakerOut2, LOW);
       delayMicroseconds(order / 2);
-
+      
       // Keep track of how long we pulsed
       elapsed_time += (order);
     } 
@@ -71,12 +76,14 @@ void playTone() {
     }                                
   }                                 
 }
+
 void loop() {
   // Set up a counter to pull from melody[] and beats[]
   for (int i=0; i<MAX_COUNT; i++)
   {
-    order = oNotes[3];//this number equals the note from oNotes so 3 is equal to C because 0123 
+    order = oNotes[2];//this number equals the note from oNotes so 3 is equal to C because 0123 
     note = lNotes[i];
+    x= xNotes[2];
 
 
     duration = note * tempo; // Set up timing
@@ -91,6 +98,8 @@ void loop() {
       Serial.print(note);
       Serial.print(" ");    
       Serial.print(order);
+      Serial.print(" ");
+      Serial.print(x);
       Serial.print(" ");
       Serial.println(duration);
     }
