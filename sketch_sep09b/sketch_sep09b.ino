@@ -47,7 +47,7 @@ void setup() {
   } 
 }
 
-//comment
+//comment jac did this
 // MELODY and TIMING  =======================================
 //  melody[] is an array of notes, accompanied by beats[], 
 //  which sets each note's relative length (higher #, longer note) 
