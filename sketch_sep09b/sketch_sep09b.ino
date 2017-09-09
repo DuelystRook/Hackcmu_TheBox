@@ -2,26 +2,11 @@
 
 #include <SD.h>
 
-/* Play Melody
- * -----------
- *
- * Program to play a simple melody
- *
- * Tones are created by quickly pulsing a speaker on and off 
- *   using PWM, to create signature frequencies.
- *
- * Each note has a frequency, created by varying the period of 
- *  vibration, measured in microseconds. We'll use pulse-width
- *  modulation (PWM) to create that vibration.
-
- * We calculate the pulse-width to be half the period; we pulse 
- *  the speaker HIGH for 'pulse-width' microseconds, then LOW 
- *  for 'pulse-width' microseconds.
+/* pulse-width modulation (PWM) = vibration.
+  pulse-width = half the period
+ speaker = HIGH for 'pulse-width' microseconds
+         = LOW for 'pulse-width' microseconds.
  *  This pulsing creates a vibration of the desired frequency.
- *
- * (cleft) 2005 D. Cuartielles for K3
- * Refactoring and comments 2006 clay.shirky@nyu.edu
- * See NOTES in comments at end for possible improvements
  */
 
 #define  c     3830    // 261 Hz 
@@ -32,58 +17,52 @@
 #define  a     2272    // 440 Hz 
 #define  b     2028    // 493 Hz 
 #define  C     1912    // 523 Hz 
-#define  R     0
+#define  n     0
+//n =no sound 
+//put speaker on pin 9
+int speakerOut = 12;
+int DEBUG = 1; //debugs
 
-// SETUP ============================================
-// Set up speaker on a PWM pin (digital 9, 10 or 11)
-int speakerOut = 9;
-// Do we want debugging on serial out? 1 for yes, 0 for no
-int DEBUG = 1;
-
-void setup() { 
-  pinMode(speakerOut, OUTPUT);
-  if (DEBUG) { 
-    Serial.begin(9600); // Set serial out if we want debugging
+void setup()
+{ 
+  pinMode(speakerOut, OUTPUT);//declares speaker
+  if (DEBUG) 
+  { 
+    Serial.begin(9600); //something about debugging
   } 
 }
-
-//comment jac did this
-// MELODY and TIMING  =======================================
-//  melody[] is an array of notes, accompanied by beats[], 
-//  which sets each note's relative length (higher #, longer note) 
-int melody[] = {  C,  b,  g,  C,  b,   e,  R,  C,  c,  g, a, C };
-int beats[]  = { 16, 16, 16,  8,  8,  16, 32, 16, 16, 16, 8, 8 }; 
-int MAX_COUNT = sizeof(melody) / 2; // Melody length, for looping.
+int oNotes[] = {  C,  b,  g,  C,  b,   e,  C,  C,  c,  g, a, C };//order of notes 
+int lNotes[]  = { 160, 160, 160,  160,  160,  160, 160, 160, 160, 160, 160, 160 }; //length of notes(only necessary when playing a prewritten song)
+int MAX_COUNT = sizeof(oNotes) / 2; // Melody length, for looping.
 
 // Set overall tempo
 long tempo = 10000;
 // Set length of pause between notes
 int pause = 1000;
 // Loop variable to increase Rest length
-int rest_count = 100; //<-BLETCHEROUS HACK; See NOTES
+int rest_count = 100; 
 
-// Initialize core variables
-int tone_ = 0;
-int beat = 0;
+int order = 0;// initializes variables
+int note = 0;
 long duration  = 0;
 
-// PLAY TONE  ==============================================
 // Pulse the speaker to play a tone for a particular duration
 void playTone() {
   long elapsed_time = 0;
-  if (tone_ > 0) { // if this isn't a Rest beat, while the tone has 
-    //  played less long than 'duration', pulse speaker HIGH and LOW
-    while (elapsed_time < duration) {
+  if (order > 0)
+  { // if this isn't a Rest beat, while the tone hasvplayed less long than 'duration', pulse speaker HIGH and LOW
+    while (elapsed_time < duration)
+      {
 
       digitalWrite(speakerOut,HIGH);
-      delayMicroseconds(tone_ / 2);
+      delayMicroseconds(order / 2);
 
       // DOWN
       digitalWrite(speakerOut, LOW);
-      delayMicroseconds(tone_ / 2);
+      delayMicroseconds(order / 2);
 
       // Keep track of how long we pulsed
-      elapsed_time += (tone_);
+      elapsed_time += (order);
     } 
   }
   else { // Rest beat; loop times delay
@@ -92,15 +71,15 @@ void playTone() {
     }                                
   }                                 
 }
-
-// LET THE WILD RUMPUS BEGIN =============================
 void loop() {
   // Set up a counter to pull from melody[] and beats[]
-  for (int i=0; i<MAX_COUNT; i++) {
-    tone_ = melody[i];
-    beat = beats[i];
+  for (int i=0; i<MAX_COUNT; i++)
+  {
+    order = oNotes[3];//this number equals the note from oNotes so 3 is equal to C because 0123 
+    note = lNotes[i];
 
-    duration = beat * tempo; // Set up timing
+
+    duration = note * tempo; // Set up timing
 
     playTone(); 
     // A pause between notes...
@@ -109,9 +88,9 @@ void loop() {
     if (DEBUG) { // If debugging, report loop, tone, beat, and duration
       Serial.print(i);
       Serial.print(":");
-      Serial.print(beat);
+      Serial.print(note);
       Serial.print(" ");    
-      Serial.print(tone_);
+      Serial.print(order);
       Serial.print(" ");
       Serial.println(duration);
     }
@@ -133,17 +112,11 @@ void loop() {
  *  overhead from anyprogram mods. Past behavior is no guarantee of future 
  *  performance. Your mileage may vary. Light fuse and get away.
  *  
- * This could use a number of enhancements:
- * ADD code to let the programmer specify how many times the melody should
- *     loop before stopping
- * ADD another octave
- * MOVE tempo, pause, and rest_count to #define statements
  * RE-WRITE to include volume, using analogWrite, as with the second program at
  *          http://www.arduino.cc/en/Tutorial/PlayMelody
  * ADD code to make the tempo settable by pot or other input device
  * ADD code to take tempo or volume settable by serial communication 
  *          (Requires 0005 or higher.)
  * ADD code to create a tone offset (higer or lower) through pot etc
- * REPLACE random melody with opening bars to 'Smoke on the Water'
  */
 
