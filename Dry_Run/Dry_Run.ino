@@ -22,15 +22,14 @@ const int LED3Pin=8;
  *  This pulsing creates a vibration of the desired frequency.
  */
 
-#define  c     3830    // 261 Hz 
-#define  d     3400    // 294 Hz 
-#define  e     3038    // 329 Hz 
-#define  f     2864    // 349 Hz 
-#define  g     2550    // 392 Hz 
-#define  a     2272    // 440 Hz 
-#define  b     2028    // 493 Hz 
-#define  C     1912    // 523 Hz 
-#define  n     0
+int  c   =  3830;    // 261 Hz 
+int  d   =  3400;    // 294 Hz 
+int  e   =  3038;    // 329 Hz 
+int  f   =  2864;    // 349 Hz 
+int  g   =  2550;   // 392 Hz 
+int  a   =  2272;    // 440 Hz 
+int  b   =  2028;    // 493 Hz  
+int  n   =  0;
 //n =no sound 
 //put speaker on pin 9
 int speakerOut = 8;
@@ -47,8 +46,8 @@ int button6State=0;
 int button7State=0;
 int button8State=0;
 
-int octavePhase = 0;
-int octave=3;
+
+int x = 1;
 
 void setup()
 { 
@@ -96,8 +95,6 @@ int rest_count = 100;
 int order = 1;// initializes variables
 int note = lNotes[3];
 long duration  = note*tempo;
-int doublePressTimer=0;
-int doublePressTime=doublePressTimer;
 
 //  button1State = digitalRead(button1Pin);
  // button2State=digitalRead(button2Pin);
@@ -122,12 +119,66 @@ void playTone() {
          button6State=digitalRead(button6Pin);
          button7State=digitalRead(button7Pin);
          button8State=digitalRead(button8Pin);
+         
+
+         if (button8State == HIGH) {
+           x += 1;
+          if (x%3 == 2) {
+            c = 1912;
+            d = 1704;
+            e = 1518;
+            f = 1433;
+            g = 1276;
+            a = 1136;
+            b = 1012;
+            aNotes[0] = {  c};
+            bNotes[0] = {  d };
+            cNotes[0] = {  e };
+            dNotes[0] = {  f};
+            eNotes[0] = {  g};
+            fNotes[0] = {  a};
+            gNotes[0] = {  b};
+          }
+          else if (x%3 == 0) {
+            c = 7634;
+            d = 6803;
+            e = 6061;
+            f = 5714;
+            g = 5102;
+            a = 4546;
+            b = 4049;
+             aNotes[0] = {  c};
+            bNotes[0] = {  d };
+            cNotes[0] = {  e };
+            dNotes[0] = {  f};
+            eNotes[0] = {  g};
+            fNotes[0] = {  a};
+            gNotes[0] = {  b};
+          }
+          else {
+            c = 3830;
+            d = 3400;
+            e = 3038;
+            f = 2864;
+            g = 2550;
+            a = 2272;
+            b = 2028;
+             aNotes[0] = {  c};
+            bNotes[0] = {  d };
+            cNotes[0] = {  e };
+            dNotes[0] = {  f};
+            eNotes[0] = {  g};
+            fNotes[0] = {  a};
+            gNotes[0] = {  b};
+          }
+          button8State=HIGH;
+         }
 
     // digitalWrite(speakerOut,LOW);
       if (button1State == HIGH) {
         digitalWrite(speakerOut,HIGH);
         digitalWrite(speakerOut2, HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = aNotes[0];
       //note = lNotes[i];
@@ -141,10 +192,9 @@ void playTone() {
 
    //digitalWrite(speakerOut2,LOW);
    if(button2State==HIGH){
-    
     digitalWrite(speakerOut,HIGH);
     digitalWrite(speakerOut2,HIGH);
-    delayMicroseconds(order/octave);
+    delayMicroseconds(order/2);
     order = bNotes[0];
    // note = lNotes[i];
 
@@ -159,7 +209,7 @@ void playTone() {
     if (button3State == HIGH) {
         digitalWrite(speakerOut,HIGH);
         digitalWrite(speakerOut2,HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = cNotes[0];
       //note = lNotes[i];
@@ -172,7 +222,7 @@ void playTone() {
        if (button4State == HIGH) {
         digitalWrite(speakerOut,HIGH);
          digitalWrite(speakerOut2,HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = dNotes[0];
       //note = lNotes[i];
@@ -184,36 +234,36 @@ void playTone() {
        if (button5State == HIGH) {
         digitalWrite(speakerOut,HIGH);
          digitalWrite(speakerOut2,HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = eNotes[0];
       //note = lNotes[i];
        //duration = note * tempo; // Set up timing  
   } 
 
-      digitalWrite(speakerOut, LOW);
-      digitalWrite(speakerOut2, LOW);
-      delayMicroseconds(order );  
+      //digitalWrite(speakerOut, LOW);
+      //digitalWrite(speakerOut2, LOW);
+      //delayMicroseconds(order );  
       //delayMicroseconds(order/3 );  
 
       if (button6State == HIGH) {
         digitalWrite(speakerOut,HIGH);
          digitalWrite(speakerOut2,HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = eNotes[0];
       //note = lNotes[i];
        //duration = note * tempo; // Set up timing  
   } 
 
-      digitalWrite(speakerOut, LOW);
-      digitalWrite(speakerOut2, LOW);
-      delayMicroseconds(order/10 );  
+      //digitalWrite(speakerOut, LOW);
+      //digitalWrite(speakerOut2, LOW);
+      //delayMicroseconds(order/10 );  
 
       if (button7State == HIGH) {
         digitalWrite(speakerOut,HIGH);
          digitalWrite(speakerOut2,HIGH);
-      delayMicroseconds(order/octave);
+      delayMicroseconds(order/2);
     // turn LED on:
       order = eNotes[0];
       //note = lNotes[i];
@@ -222,7 +272,7 @@ void playTone() {
 
       digitalWrite(speakerOut, LOW);
       digitalWrite(speakerOut2, LOW);
-      delayMicroseconds(order );  
+      delayMicroseconds(order/2 );  
 
       //delayMicroseconds(order/3 );
       //delayMicroseconds(order/3 );
@@ -254,17 +304,18 @@ void loop() {
     //playTone(); 
     // A pause between notes...
    // delayMicroseconds(pause);
-  //  doublePressTime++;
+ doublePressTime++;
     playTone();
 
     
-    //if(doublePressTime>=doublePressTimer){
-      if(button8State==LOW){
-         octavePhase+=1;
-         octavePhase=octavePhase%3;
-         doublePressTime=0;
-        }
-   // }
+    if(doublePressTime>=doublePressTimer){
+     if(button8State==LOW){
+       //  octavePhase+=1;
+         //octavePhase=octavePhase%3;
+         //doublePressTime=0;
+     }}
+  
+
 
     if(octavePhase==0){
       octave=2;
@@ -284,6 +335,7 @@ void loop() {
       digitalWrite(LED2Pin, LOW);
       digitalWrite(LED3Pin, HIGH);
      }
+   
 }
 
 /*
