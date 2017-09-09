@@ -138,6 +138,9 @@ void playTone() {
             eNotes[0] = {  g};
             fNotes[0] = {  a};
             gNotes[0] = {  b};
+            digitalWrite(LED1Pin, LOW);
+            digitalWrite(LED2Pin, LOW);
+            digitalWrite(LED3Pin, HIGH);
           }
           else if (x%3 == 0) {
             c = 7634;
@@ -154,6 +157,9 @@ void playTone() {
             eNotes[0] = {  g};
             fNotes[0] = {  a};
             gNotes[0] = {  b};
+            digitalWrite(LED1Pin, LOW);
+            digitalWrite(LED2Pin, HIGH);
+            digitalWrite(LED3Pin, LOW);
           }
           else {
             c = 3830;
@@ -170,8 +176,10 @@ void playTone() {
             eNotes[0] = {  g};
             fNotes[0] = {  a};
             gNotes[0] = {  b};
+            digitalWrite(LED1Pin, HIGH);
+            digitalWrite(LED2Pin, LOW);
+            digitalWrite(LED3Pin, LOW);
           }
-          button8State=HIGH;
          }
 
     // digitalWrite(speakerOut,LOW);
@@ -260,7 +268,7 @@ void playTone() {
       //digitalWrite(speakerOut2, LOW);
       //delayMicroseconds(order/10 );  
 
-      if (button7State == HIGH) {
+      /*if (button7State == HIGH) {
         digitalWrite(speakerOut,HIGH);
          digitalWrite(speakerOut2,HIGH);
       delayMicroseconds(order/2);
@@ -268,7 +276,7 @@ void playTone() {
       order = eNotes[0];
       //note = lNotes[i];
        //duration = note * tempo; // Set up timing  
-  } 
+  } */
 
       digitalWrite(speakerOut, LOW);
       digitalWrite(speakerOut2, LOW);
@@ -304,11 +312,11 @@ void loop() {
     //playTone(); 
     // A pause between notes...
    // delayMicroseconds(pause);
- doublePressTime++;
+   //doublePressTime++;
     playTone();
 
     
-    if(doublePressTime>=doublePressTimer){
+    /*if(doublePressTime>=doublePressTimer){
      if(button8State==LOW){
        //  octavePhase+=1;
          //octavePhase=octavePhase%3;
@@ -334,7 +342,7 @@ void loop() {
       digitalWrite(LED1Pin, LOW);
       digitalWrite(LED2Pin, LOW);
       digitalWrite(LED3Pin, HIGH);
-     }
+     }*/
    
 }
 
