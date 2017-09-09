@@ -9,6 +9,7 @@ const int button4Pin=7;
 const int button5Pin=9;
 const int button6pin=11;
 const int button7pin=10;
+const int button8pin=13;
 
 /* pulse-width modulation (PWM) = vibration.
   pulse-width = half the period
@@ -43,6 +44,9 @@ int button2State=0;
 int button3State=0;
 int button4State=0;
 int button5State=0;
+
+int d[3] = {0, 1, 2}
+int x = 0
 
 void setup()
 { 
@@ -85,7 +89,7 @@ long duration  = note*tempo;
  // button2State=digitalRead(button2Pin);
  // button3State=digitalRead(button3Pin);
   
- 
+
   
 // Pulse the speaker to play a tone for a particular duration
 void playTone() {
@@ -101,7 +105,10 @@ void playTone() {
          button3State=digitalRead(button3Pin);
          button4State=digitalRead(button4Pin);
          button5State=digitalRead(button5Pin);
- 
+         button6State=digitalRead(button6Pin);
+         button7State=digitalRead(button7Pin);
+         button8State=digitalRead(button8Pin);
+
     // digitalWrite(speakerOut,LOW);
       if (button1State == HIGH) {
         digitalWrite(speakerOut,HIGH);
