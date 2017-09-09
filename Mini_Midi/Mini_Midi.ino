@@ -7,7 +7,8 @@ const int button2Pin=4;
 const int button3Pin=5;
 const int button4Pin=7;
 const int button5Pin=9;
-
+const int button6pin=11;
+const int button7pin=10;
 
 /* pulse-width modulation (PWM) = vibration.
   pulse-width = half the period
@@ -17,11 +18,16 @@ const int button5Pin=9;
  */
 
 #define  c     3830    // 261 Hz 
+#define  c#    3610    // 277 Hz
 #define  d     3400    // 294 Hz 
+#define  d#    3220    // 311 Hz
 #define  e     3038    // 329 Hz 
 #define  f     2864    // 349 Hz 
+#define  f#    2703    // 370 Hz
 #define  g     2550    // 392 Hz 
+#define  g#    2410    // 415 Hz
 #define  a     2272    // 440 Hz 
+#define  a#    2146    // 466 Hz
 #define  b     2028    // 493 Hz 
 #define  C     1912    // 523 Hz 
 #define  n     0
@@ -29,9 +35,6 @@ const int button5Pin=9;
 //put speaker on pin 9
 int speakerOut = 8;
 int speakerOut2 = 12;
-int LED1=3;
-int LED2=6;
-int LED3=8;
 
 int DEBUG = 1; //debugs
 
@@ -57,12 +60,12 @@ void setup()
 }
 
 int aNotes[] = {  c};
-int bNotes[] = {  e };
-int cNotes[] = {  g };
-int dNotes[] = {  C};
-int eNotes[] = {  d};
-int fNotes[] = {  f};
-int gNotes[] = {  a};
+int bNotes[] = {  d };
+int cNotes[] = {  e };
+int dNotes[] = {  f};
+int eNotes[] = {  g};
+int fNotes[] = {  a};
+int gNotes[] = {  b};
 //order of notes 
 int lNotes[]  = { 160, 160, 160,  160,  160,  160, 160, 160, 160, 160, 160, 160 }; //length of notes(only necessary when playing a prewritten song)
 //int MAX_COUNT = sizeof(oNotes) / 2; // Melody length, for looping.
