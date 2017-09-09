@@ -29,6 +29,9 @@ const int button5Pin=9;
 //put speaker on pin 9
 int speakerOut = 8;
 int speakerOut2 = 12;
+int LED1=3;
+int LED2=6;
+int LED3=8;
 
 int DEBUG = 1; //debugs
 
