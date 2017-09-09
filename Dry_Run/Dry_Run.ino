@@ -6,14 +6,14 @@ const int button1Pin=2;
 const int button2Pin=4;
 const int button3Pin=5;
 const int button4Pin=7;
-const int button5Pin=9;
+const int button5Pin=8;
 const int button6Pin=11;
 const int button7Pin=10;
 const int button8Pin=13;
 
 const int LED1Pin=3;
 const int LED2Pin=6;
-const int LED3Pin=8;
+const int LED3Pin=9;
 
 /* pulse-width modulation (PWM) = vibration.
   pulse-width = half the period
