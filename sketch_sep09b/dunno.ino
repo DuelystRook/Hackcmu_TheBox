@@ -2,13 +2,6 @@
 
 #include <SD.h>
 
-/* pulse-width modulation (PWM) = vibration.
-  pulse-width = half the period
- speaker = HIGH for 'pulse-width' microseconds
-         = LOW for 'pulse-width' microseconds.
- *  This pulsing creates a vibration of the desired frequency.
- */
-
 #define  c     3830    // 261 Hz 
 #define  d     3400    // 294 Hz 
 #define  e     3038    // 329 Hz 
@@ -33,9 +26,9 @@ void setup()
     Serial.begin(9600); //something about debugging
   } 
 }
-int oNotes[] = {  C,  b,  g,  C,  b,   e,  C,  C,  c,  g, a, C };//order of notes 
+int oNotes[] = {  C,  b,  g,  C,  b,   e,  C,  C,  g,  g, a, C };//order of notes 
 int xNotes[] = {  c,  c,  c,  c,  c,   c,  c,  c,  c,  c, c, c };//order of notes 
-int lNotes[]  = { 160, 160, 160,  160,  160,  160, 160, 160, 160, 160, 160, 160 }; //length of notes(only necessary when playing a prewritten song)
+int lNotes[]  = { 160 }; //length of notes(only necessary when playing a prewritten song)
 int MAX_COUNT = sizeof(oNotes) / 2; // Melody length, for looping.
 int MAX_COUNT2 = sizeof(xNotes) / 2;
 // Set overall tempo
@@ -99,13 +92,14 @@ void playTone2() {
     }                                
   }                                 
 }
-void loop() {
+void loop()
+{
   // Set up a counter to pull from melody[] and beats[]
   for (int i=0; i<MAX_COUNT; i++)
   {
     order = oNotes[2];//this number equals the note from oNotes so 3 is equal to C because 0123 
     note = lNotes[i];
-    x= xNotes[2];
+   // x= xNotes[2];
 
 
     duration = note * tempo; // Set up timing
@@ -128,27 +122,4 @@ void loop() {
     }
   }
 }
-
-/*
- * NOTES
- * The program purports to hold a tone for 'duration' microseconds.
- *  Lies lies lies! It holds for at least 'duration' microseconds, _plus_
- *  any overhead created by incremeting elapsed_time (could be in excess of 
- *  3K microseconds) _plus_ overhead of looping and two digitalWrites()
- *  
- * As a result, a tone of 'duration' plays much more slowly than a rest
- *  of 'duration.' rest_count creates a loop variable to bring 'rest' beats 
- *  in line with 'tone' beats of the same length. 
- * 
- * rest_count will be affected by chip architecture and speed, as well as 
- *  overhead from anyprogram mods. Past behavior is no guarantee of future 
- *  performance. Your mileage may vary. Light fuse and get away.
- *  
- * RE-WRITE to include volume, using analogWrite, as with the second program at
- *          http://www.arduino.cc/en/Tutorial/PlayMelody
- * ADD code to make the tempo settable by pot or other input device
- * ADD code to take tempo or volume settable by serial communication 
- *          (Requires 0005 or higher.)
- * ADD code to create a tone offset (higer or lower) through pot etc
- */
 
